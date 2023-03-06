@@ -8,7 +8,8 @@ const morgan = require('morgan')
 const PORT = 8007
 
 const appRouter = require('./routes/index')
-const loginRouter = require('./routes/sso')
+const ssoRouter = require('./routes/sso')
+const apiRouter = require('./routes/api')
 
 const app = express()
 
@@ -26,9 +27,9 @@ app.use(cors())
 
 app.use(morgan('combined'))
 
-// app.use('/api', apiRouter)
 app.use('/', appRouter)
-app.use('/sso', loginRouter)
+app.use('/sso', ssoRouter)
+app.use('/public/v1', apiRouter)
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)

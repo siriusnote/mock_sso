@@ -54,18 +54,19 @@ router.post('/login', (req, res, next) => {
                 },
                 "systemName": "app1",
                 "accessibleSystems": [
-
+                    "CCEPPORTAL",
+                    "GESD_LIFT",
+                    "GESDRDCC"
                 ]
             }
         }
 
         // Create Access token
         const access_token = jwt.sign(content, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-        
         var redirectUrl = `${successUrl}?token=${access_token}`
 
-        
-        // Create refresh token when remembe_me clicked
+        // Create refresh token when remember_me clicked
+        // REMINDER: Original SSO Server is not using JWT Token
         if(remember_me){
             const refreshToken = jwt.sign(content, process.env.TOKEN_SECRET, { expiresIn: '24h' });
             redirectUrl = `${redirectUrl}&refreshToken=${refreshToken}`
